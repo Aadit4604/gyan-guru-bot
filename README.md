@@ -1,4 +1,4 @@
-# 📚 Padh Lo Bot - Grade 10 CBSE Study Companion
+# 📚 Gyan Guru - Study Companion
 
 A powerful Discord bot designed to help Grade 10 CBSE students study, practice, and compete with their classmates!
 
