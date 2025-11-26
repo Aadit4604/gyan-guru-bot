@@ -1,0 +1,62 @@
+[
+  {
+    "id": "q1",
+    "chapter": "Chemical Reactions",
+    "subject": "Science",
+    "question": "What happens when magnesium ribbon is burnt in air?",
+    "options": [
+      "It burns with a dazzling white flame",
+      "It burns with a blue flame",
+      "It does not burn",
+      "It melts"
+    ],
+    "correctAnswer": 0,
+    "hint": "Think about the color of magnesium oxide ash.",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "q2",
+    "chapter": "Real Numbers",
+    "subject": "Math",
+    "question": "The HCF of 96 and 404 is:",
+    "options": [
+      "4",
+      "2",
+      "8",
+      "12"
+    ],
+    "correctAnswer": 0,
+    "hint": "Try prime factorization of both numbers.",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "q3",
+    "chapter": "Nationalism in Europe",
+    "subject": "History",
+    "question": "Who was proclaimed the King of United Italy in 1861?",
+    "options": [
+      "Mazzini",
+      "Garibaldi",
+      "Victor Emmanuel II",
+      "Cavour"
+    ],
+    "correctAnswer": 2,
+    "hint": "He was the King of Sardinia-Piedmont.",
+    "difficulty": "Medium"
+  },
+  {
+    "subject": "science",
+    "chapter": "electricity",
+    "question": "ohm's law",
+    "options": [
+      "v = ir",
+      "i = v/p",
+      "p = q/t",
+      "h = i^2rt"
+    ],
+    "correctAnswer": 0,
+    "hint": "its related to volt cureent and resistance",
+    "difficulty": "Medium",
+    "id": "q4"
+  }
+]

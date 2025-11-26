@@ -1,0 +1,14 @@
+{
+  "name": "padhlo-bot",
+  "version": "1.0.0",
+  "description": "Grade 10 CBSE Study Companion Bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.0",
+    "dotenv": "^16.3.1",
+    "@google/genai": "^1.30.0"
+  }
+}
