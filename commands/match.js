@@ -56,8 +56,7 @@ module.exports = {
 
         const challengeMsg = await interaction.reply({ 
             content: `⚔️ **${interaction.user.username}** has challenged **${opponent.username}** to a RAPID-FIRE PvP match!\n\n${opponent}, select the match duration:`, 
-            components: [row],
-            fetchReply: true 
+            components: [row]
         });
 
         try {

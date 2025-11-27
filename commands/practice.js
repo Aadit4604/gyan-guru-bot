@@ -50,7 +50,7 @@ module.exports = {
 
         const row = new ActionRowBuilder().addComponents(buttons);
 
-        const response = await interaction.reply({ embeds: [embed], components: [row], fetchReply: true });
+        const response = await interaction.reply({ embeds: [embed], components: [row] });
 
         // Collector for answers
         const collector = response.createMessageComponentCollector({ filter: i => i.user.id === interaction.user.id, time: 60000 });
