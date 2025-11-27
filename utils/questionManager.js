@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { generateQuestion } = require('./ai');
 
 const questionsPath = path.join(__dirname, '../data/questions.json');
 
@@ -17,14 +18,37 @@ function saveQuestions(questions) {
 }
 
 module.exports = {
-    getRandomQuestion: (chapter = null) => {
-        const questions = getQuestions();
-        let filtered = questions;
-        if (chapter) {
-            filtered = questions.filter(q => q.chapter.toLowerCase() === chapter.toLowerCase());
+    getRandomQuestion: async (chapter = null, userId = 'system') => {
+        try {
+            // 70% chance to use AI-generated question, 30% chance to use static questions
+            const useAI = Math.random() < 0.7;
+
+            if (useAI) {
+                const aiQuestion = await generateQuestion(chapter, userId);
+                if (aiQuestion) {
+                    return aiQuestion;
+                }
+            }
+
+            // Fallback to static questions if AI fails
+            const questions = getQuestions();
+            let filtered = questions;
+            if (chapter) {
+                filtered = questions.filter(q => q.chapter.toLowerCase() === chapter.toLowerCase());
+            }
+            if (filtered.length === 0) return null;
+            return filtered[Math.floor(Math.random() * filtered.length)];
+        } catch (error) {
+            console.error('Error in getRandomQuestion:', error);
+            // Fallback to static questions on error
+            const questions = getQuestions();
+            let filtered = questions;
+            if (chapter) {
+                filtered = questions.filter(q => q.chapter.toLowerCase() === chapter.toLowerCase());
+            }
+            if (filtered.length === 0) return null;
+            return filtered[Math.floor(Math.random() * filtered.length)];
         }
-        if (filtered.length === 0) return null;
-        return filtered[Math.floor(Math.random() * filtered.length)];
     },
 
     addQuestion: (newQuestion) => {

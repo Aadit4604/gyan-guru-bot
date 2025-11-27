@@ -15,7 +15,7 @@ module.exports = {
             .setRequired(false)),
     async execute(interaction) {
         const chapter = interaction.options.getString('chapter');
-        const question = getRandomQuestion(chapter);
+        const question = await getRandomQuestion(chapter, interaction.user.id);
 
         if (!question) {
             return interaction.reply({ content: `No questions found for chapter: ${chapter || 'Random'}`, ephemeral: true });
@@ -34,10 +34,12 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`📝 Practice: ${question.subject}`)
-            .setDescription(`**${question.question}**`)
+            .setDescription(`# **${question.question}**`)
+            .addFields({ name: '\u200b', value: '\u200b' }) // Spacer
             .addFields({ name: 'Chapter', value: question.chapter, inline: true })
             .addFields({ name: 'Difficulty', value: question.difficulty, inline: true })
-            .setColor(0x6366F1);
+            .setColor(0x6366F1)
+            .setAuthor({ name: '❓ Answer the question below' });
 
         const buttons = question.options.map((opt, index) => 
             new ButtonBuilder()

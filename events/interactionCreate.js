@@ -8,18 +8,28 @@ module.exports = {
         const command = interaction.client.commands.get(interaction.commandName);
 
         if (!command) {
-            console.error(`No command matching ${interaction.commandName} was found.`);
-            return;
+            console.warn(`⚠️ No command matching ${interaction.commandName} was found.`);
+            return await interaction.reply({ 
+                content: '❌ This command no longer exists or is unavailable.',
+                ephemeral: true 
+            });
         }
 
         try {
+            console.log(`📝 Command executed: ${interaction.commandName} by ${interaction.user.tag}`);
             await command.execute(interaction);
         } catch (error) {
-            console.error(error);
+            console.error(`❌ Error executing command ${interaction.commandName}:`, error);
+            
+            const errorMessage = {
+                content: '❌ There was an error while executing this command. Please try again later.',
+                ephemeral: true 
+            };
+
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+                await interaction.followUp(errorMessage);
             } else {
-                await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+                await interaction.reply(errorMessage);
             }
         }
     },

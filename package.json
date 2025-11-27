@@ -1,14 +1,37 @@
 {
-  "name": "padhlo-bot",
-  "version": "1.0.0",
-  "description": "Grade 10 CBSE Study Companion Bot",
+  "name": "gyan-guru-bot",
+  "version": "1.1.0",
+  "description": "🎓 AI-Powered Discord Bot for Grade 10 CBSE Students - Study, Practice & Compete!",
   "main": "index.js",
+  "keywords": [
+    "discord",
+    "bot",
+    "discord.js",
+    "cbse",
+    "education",
+    "study",
+    "gemini-ai",
+    "learning"
+  ],
+  "author": "Aadit & Yash",
+  "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "upload-questions": "node scripts/upload-cbse-questions.js"
+  },
+  "engines": {
+    "node": ">=16.9.0"
   },
   "dependencies": {
     "discord.js": "^14.14.0",
     "dotenv": "^16.3.1",
     "@google/genai": "^1.30.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "eslint": "^8.54.0"
   }
 }

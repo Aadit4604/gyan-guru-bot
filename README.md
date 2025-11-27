@@ -1,49 +1,63 @@
-# 📚 Padh Lo Bot - Grade 10 CBSE Study Companion
+# 📚 Gyan Guru Bot - AI-Powered CBSE Study Companion
 
-A powerful Discord bot designed to help Grade 10 CBSE students study, practice, and compete with their classmates!
+[![Discord.js](https://img.shields.io/badge/discord.js-v14.14-blue?logo=discord)](https://discord.js.org/)
+[![Node.js](https://img.shields.io/badge/node.js-v16+-green?logo=node.js)](https://nodejs.org/)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-## ✨ Features
+> 🎓 A powerful Discord bot designed to help Grade 10 CBSE students study smarter, practice effectively, and compete with classmates using AI-powered learning!
 
-- **AI-Powered Learning**: Ask questions and get instant explanations using Google Gemini AI
-- **Practice Mode**: Solve practice questions and earn gyan gola
-- **PvP Matches**: Challenge friends in knowledge duels for bonus gyan gola
-- **Leaderboard**: Track your ranking among classmates
-- **Daily Quests**: Earn rewards for consistent daily engagement
-- **Streak System**: Build study streaks for motivation
-- **Rate Limiting**: Built-in protection against API spam
+---
 
-## 🚀 Getting Started
+## ✨ Key Features
+
+### 🤖 AI-Powered Learning
+- **Instant Answers**: Ask any question and get detailed answers via Google Gemini AI
+- **Topic Explanations**: Get comprehensive explanations for difficult concepts
+- **Smart Responses**: Formatted answers optimized for Discord
+
+### 📚 Practice & Learning
+- **Question Bank**: Solve practice questions from all chapters
+- **Hints System**: Get helpful hints without losing all points
+- **Instant Feedback**: Understand correct answers immediately
+
+### 🏆 Gamification
+- **Gyan Gola System**: Earn points for correct answers
+- **Daily Streaks**: Build consistent study habits with daily bonuses
+- **PvP Duels**: Challenge friends in knowledge battles
+- **Leaderboard**: Compete globally and track your rank
+
+### ⚡ Performance & Reliability
+- **Rate Limiting**: Smart API rate limiting to prevent abuse
+- **Multi-API Support**: Load balancing between multiple Gemini API keys
+- **Error Handling**: Graceful error messages and recovery
+- **Auto Cleanup**: Automatic memory optimization
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- Discord Bot Token
-- Google Gemini API Key
-- A Discord Server to test the bot
+- **Node.js**: v16 or higher
+- **Discord Bot Token**: From [Discord Developer Portal](https://discord.com/developers)
+- **Google Gemini API Keys**: From [Google AI Studio](https://aistudio.google.com)
+- **Discord Server**: For testing the bot
 
 ### Installation
 
-1. **Clone the repository** (or download the files)
+1. **Clone the repository**
 ```bash
-cd discord-bot
+git clone <repository-url>
+cd gyan-guru-bot
 npm install
 ```
 
-2. **Configure environment variables**
-Create a `.env` file in the root directory:
+2. **Create `.env` file**
 ```env
 DISCORD_TOKEN=your_bot_token_here
 DISCORD_CLIENT_ID=your_client_id_here
-API_KEY=your_gemini_api_key_here
-```
-
-Or update `config.json`:
-```json
-{
-  "token": "YOUR_DISCORD_BOT_TOKEN",
-  "clientId": "YOUR_CLIENT_ID",
-  "apiKey": "YOUR_GEMINI_API_KEY"
-}
+API_KEY_1=your_gemini_api_key_1
+API_KEY_2=your_gemini_api_key_2_optional
 ```
 
 3. **Start the bot**
@@ -51,53 +65,303 @@ Or update `config.json`:
 npm start
 ```
 
-You should see:
+For development with auto-reload:
+```bash
+npm run dev
 ```
-✅ Bot is ready!
-Bot loaded X commands
+
+---
+
+## 📖 Available Commands
+
+All commands are slash commands (`/`). Type `/` in Discord to see all available commands!
+
+### 🎓 Learning Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/ask` | Ask the AI assistant any question | `/ask what is photosynthesis` |
+| `/explain` | Get detailed topic explanations | `/explain Photosynthesis` |
+
+### 🎮 Practice & Competition
+
+| Command | Description |
+|---------|-------------|
+| `/practice` | Practice questions and earn points |
+| `/match` | Challenge a friend to a PvP duel |
+| `/hint` | Get a hint for the current question |
+| `/quiz` | Rapid-fire quiz mode (Coming Soon) |
+
+### 📊 Progress Tracking
+
+| Command | Description |
+|---------|-------------|
+| `/score` | View your score, streak, and rank |
+| `/leaderboard` | See top 10 students |
+| `/dailyquest` | Claim daily bonus and maintain streak |
+
+### ⚙️ Admin Commands
+
+| Command | Description | Permission |
+|---------|-------------|-----------|
+| `/addquestion` | Add new questions to database | Admin |
+| `/removepoints` | Remove points from users | Admin |
+
+### ℹ️ Other Commands
+
+| Command | Description |
+|---------|-------------|
+| `/help` | Interactive help guide |
+
+---
+
+## 💰 Gyan Gola System
+
+Earn **Gyan Gola** (GP) by studying and competing:
+
+| Activity | Points |
+|----------|--------|
+| ✅ Correct Answer | +10 GP |
+| 💡 With Hint Used | +5 GP |
+| 📅 Daily Quest | +20 GP base |
+| 🔥 Streak Bonus | +5 GP per day (up to +50) |
+| ⚔️ PvP Victory | +30 GP |
+
+### Leaderboard Rankings
+- 🥇 **Gold**: #1 Rank
+- 🥈 **Silver**: #2 Rank  
+- 🥉 **Bronze**: #3 Rank
+- ⭐ **Star**: Top 10 Ranks
+
+---
+
+## 🛠️ Project Structure
+
+```
+gyan-guru-bot/
+├── 📁 commands/              # All slash commands
+│   ├── help.js              # Interactive help menu
+│   ├── ask.js               # AI question answering
+│   ├── explain.js           # Topic explanations
+│   ├── practice.js          # Practice mode
+│   ├── match.js             # PvP battles
+│   ├── score.js             # Score display
+│   ├── leaderboard.js       # Rankings
+│   ├── dailyquest.js        # Daily rewards
+│   ├── hint.js              # Hint system
+│   ├── quiz.js              # Quiz mode
+│   ├── addquestion.js       # Admin: Add questions
+│   ├── removepoints.js      # Admin: Manage points
+│   └── ...
+├── 📁 events/               # Discord event handlers
+│   ├── ready.js            # Bot startup
+│   └── interactionCreate.js # Command processor
+├── 📁 utils/                # Utility modules
+│   ├── ai.js               # Google Gemini integration
+│   ├── points.js           # Score management
+│   ├── questionManager.js  # Question handling
+│   └── rateLimit.js        # Rate limiting
+├── 📁 data/                 # Data storage
+│   ├── questions.json      # Question database
+│   ├── scores.json         # User scores & stats
+│   └── chapters.json       # Chapter metadata
+├── .env                     # Environment variables
+├── config.json              # Bot configuration
+├── index.js                 # Main bot file
+├── package.json             # Dependencies
+└── README.md                # This file
 ```
 
-## 📖 Commands
+---
 
-All commands use the **`!` prefix**. Example: `!help`, `!practice`
+## 🔧 Configuration
 
-### Learning Commands
+### Environment Variables (`.env`)
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `!ask` | Ask the AI Study Assistant a question | `!ask what is photosynthesis` |
-| `!explain` | Get detailed explanations for topics | `!explain Photosynthesis` |
-| `!hint` | Get a hint for your practice question | `!hint` (during practice) |
+```env
+# Discord
+DISCORD_TOKEN=your_bot_token
+DISCORD_CLIENT_ID=your_client_id
 
-### Practice & Competition
+# Google Gemini API
+API_KEY_1=your_primary_api_key
+API_KEY_2=your_secondary_api_key  # Optional for load balancing
+```
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `!practice` | Practice a random or specific chapter question | `!practice` or `!practice Biology` |
-| `!match` | Challenge another player to a duel | `!match @friend` |
-| `!quiz` | Start a rapid-fire quiz (Coming Soon) | `!quiz` |
+### Bot Permissions
 
-### Progress & Rewards
+Required permissions:
+- `Send Messages` - Post responses
+- `Embed Links` - Send embeds
+- `Attach Files` - Share files if needed
+- `Read Message History` - Context awareness
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `!score` | View your current points and streak | `!score` |
-| `!leaderboard` | View top 10 students | `!leaderboard` |
-| `!dailyquest` | Claim your daily check-in bonus | `!dailyquest` |
+### Rate Limiting Configuration
 
-### Admin Commands
+Edit `utils/rateLimit.js`:
+```javascript
+const CONFIG = {
+    USER_LIMIT: 4,              // Requests per minute per user
+    WARNING_THRESHOLD: 0.75     // Show warning at 75% usage
+};
+```
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `!addquestion` | Add a new question to the database | `!addquestion Math Algebra [question] [correct] [wrong1] [wrong2] [wrong3] [hint]` |
-| `!removepoints` | Remove points from a user | `!removepoints @user 50` |
+---
 
-## 📊 Gyan Gola System
+## 📈 Development Guide
 
-- **Correct Answer** (Practice): `+10 gyan gola`
-- **Correct with Hint Used**: `+5 gyan gola`
-- **Daily Quest**: `+20 gyan gola + 5 bonus`
-- **Win PvP Match**: `+30 gyan gola`
+### Adding a New Command
+
+1. Create `commands/mycommand.js`:
+```javascript
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('mycommand')
+        .setDescription('What this command does'),
+    async execute(interaction) {
+        const embed = new EmbedBuilder()
+            .setTitle('Hello!')
+            .setColor(0x3B82F6);
+        
+        await interaction.reply({ embeds: [embed] });
+    }
+};
+```
+
+2. Bot automatically loads it on restart!
+
+### Modifying the Question Database
+
+Edit `data/questions.json`:
+```json
+{
+    "id": 1,
+    "subject": "Biology",
+    "chapter": "Cell Structure",
+    "question": "What is the powerhouse of the cell?",
+    "options": [
+        "Mitochondria",
+        "Nucleus",
+        "Ribosome",
+        "Golgi Apparatus"
+    ],
+    "correctAnswer": 0,
+    "hint": "Produces energy for the cell",
+    "difficulty": "Easy"
+}
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### ❌ Bot Not Responding
+**Solution:**
+- ✅ Verify `DISCORD_TOKEN` in `.env`
+- ✅ Check Discord Developer Portal settings
+- ✅ Ensure bot has proper permissions
+- ✅ Check bot intents are enabled
+
+### ⚠️ Rate Limit Warnings
+**Solution:**
+- ✅ This is normal with high usage
+- ✅ Users should wait 60 seconds before retrying
+- ✅ Adjust `USER_LIMIT` in `utils/rateLimit.js`
+
+### 🔑 API Key Errors
+**Solution:**
+- ✅ Verify API key is valid and active
+- ✅ Check Google API quota and billing
+- ✅ Try using secondary API key
+- ✅ Generate new API key if needed
+
+### 📊 Score Issues
+**Solution:**
+- ✅ Check `data/scores.json` is writable
+- ✅ Verify file permissions
+- ✅ Check disk space availability
+
+---
+
+## 📊 Statistics & Monitoring
+
+View logs to monitor bot performance:
+```bash
+npm start 2>&1 | tee bot.log
+```
+
+Monitor:
+- Command execution rates
+- API response times
+- Error frequencies
+- User engagement
+
+---
+
+## 🚀 Performance Tips
+
+1. **Use Multiple API Keys**: Load balance across 2+ Gemini keys
+2. **Enable Rate Limiting**: Prevent API quota exhaustion
+3. **Regular Cleanup**: Archive old user data monthly
+4. **Monitor Logs**: Track and fix errors proactively
+
+---
+
+## 📋 Planned Features
+
+- [ ] SQLite/MongoDB database integration
+- [ ] User profiles with badges & achievements
+- [ ] Custom difficulty levels
+- [ ] Study group collaboration
+- [ ] Progress tracking & analytics
+- [ ] Mobile companion app
+- [ ] Text-to-speech explanations
+
+---
+
+## 📝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/NewFeature`)
+3. Commit changes (`git commit -m 'Add NewFeature'`)
+4. Push to branch (`git push origin feature/NewFeature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💼 Authors
+
+Created with ❤️ by **Aadit & Yash**
+
+---
+
+## 💬 Support
+
+- **Issues**: Report bugs and request features via GitHub Issues
+- **Discussions**: Join our Discord community for discussions
+- **Email**: Contact through repository
+
+---
+
+## 🙏 Acknowledgments
+
+- [Discord.js](https://discord.js.org/) - Discord bot framework
+- [Google Gemini AI](https://ai.google.dev/) - AI model
+- [Node.js](https://nodejs.org/) - Runtime environment
+
+---
+
+**Made for students. Powered by AI. Built for learning. 🎓✨**
 - **Loss PvP Match**: `0 gyan gola`
 
 ## 🔧 Configuration
