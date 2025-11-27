@@ -6,10 +6,10 @@
 const rateLimits = new Map();
 
 const CONFIG = {
-    GLOBAL_LIMIT: 50,           // Max requests per minute globally
-    USER_LIMIT: 5,              // Max requests per minute per user
+    GLOBAL_LIMIT: 60,           // Max requests per minute globally (Gemini free tier limit)
+    USER_LIMIT: 4,              // Max requests per minute per user (Gemini free tier limit)
     COOLDOWN_MINUTES: 1,        // Cooldown period in minutes
-    WARNING_THRESHOLD: 0.8      // Show warning at 80% usage
+    WARNING_THRESHOLD: 0.75     // Show warning at 75% usage
 };
 
 /**

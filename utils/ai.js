@@ -2,10 +2,20 @@ const { GoogleGenAI } = require("@google/genai");
 const config = require('../config.json');
 const { checkRateLimit } = require('./rateLimit');
 
-// Initialize Gemini
-// Note: In production, use process.env.API_KEY
-const apiKey = process.env.API_KEY || config.apiKey;
-const ai = new GoogleGenAI({ apiKey: apiKey });
+// Initialize Gemini with multiple API keys for load balancing
+const apiKey1 = process.env.API_KEY_1 || config.apiKey;
+const apiKey2 = process.env.API_KEY_2 || process.env.API_KEY_1 || config.apiKey;
+
+const ai1 = new GoogleGenAI({ apiKey: apiKey1 });
+const ai2 = new GoogleGenAI({ apiKey: apiKey2 });
+
+// Round-robin load balancing
+let requestCount = 0;
+
+function getNextAI() {
+    requestCount++;
+    return requestCount % 2 === 0 ? ai1 : ai2;
+}
 
 module.exports = {
     explainTopic: async (topic, userId) => {
@@ -20,6 +30,7 @@ module.exports = {
         }
 
         try {
+            const ai = getNextAI();
             const response = await ai.models.generateContent({
                 model: 'gemini-2.5-flash',
                 contents: `Explain the Grade 10 CBSE topic: "${topic}". 
@@ -45,6 +56,7 @@ module.exports = {
         }
 
         try {
+            const ai = getNextAI();
             const response = await ai.models.generateContent({
                 model: 'gemini-2.5-flash',
                 contents: `You are a helpful study assistant for a Grade 10 student. 

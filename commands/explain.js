@@ -13,35 +13,52 @@ module.exports = {
         await interaction.deferReply();
         const topic = interaction.options.getString('topic');
         
-        try {
-            const explanation = await explainTopic(topic, interaction.user.id);
-            
+        const explanation = await explainTopic(topic, interaction.user.id);
+        
+        // Split long responses into multiple embeds
+        // Discord embed size limit is 6000 total, but we'll use 3500 per embed to be safe
+        const MAX_DESC_LENGTH = 3500;
+        const embeds = [];
+        
+        if (explanation.length <= MAX_DESC_LENGTH) {
+            // Short response - single embed
             const embed = new EmbedBuilder()
-                .setAuthor({ 
-                    name: 'AI Study Guide',
-                    iconURL: 'https://em-content.zobj.net/thumbs/160/twitter/348/books_1f4da.png'
-                })
-                .setTitle(`📚 ${topic}`)
-                .setDescription(
-                    `━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-                    `${explanation}\n` +
-                    `━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
-                    `💡 **Need more help?** Use \`/ask\` for specific questions!`
-                )
+                .setTitle(`📚 Explanation: ${topic.substring(0, 256)}`)
+                .setDescription(explanation)
                 .setColor(0x3B82F6)
-                .setThumbnail('https://em-content.zobj.net/thumbs/160/twitter/348/open-book_1f4d6.png')
-                .setFooter({ text: '📖 Gyan Guru AI • Study smarter, not harder' })
-                .setTimestamp();
-
-            await interaction.editReply({ embeds: [embed] });
-        } catch (error) {
-            const errorEmbed = new EmbedBuilder()
-                .setTitle('❌ Error')
-                .setDescription('Sorry, I couldn\'t generate an explanation. Please try again with a different topic or rephrase.')
-                .setColor(0xEF4444)
-                .setFooter({ text: 'Contact an administrator if this persists' });
+                .setFooter({ text: 'Powered by Padh Lo AI' });
+            embeds.push(embed);
+        } else {
+            // Long response - split into multiple embeds
+            let remaining = explanation;
+            let partNumber = 1;
             
-            await interaction.editReply({ embeds: [errorEmbed] });
+            while (remaining.length > 0) {
+                const chunk = remaining.substring(0, MAX_DESC_LENGTH);
+                const lastNewline = chunk.lastIndexOf('\n');
+                const textToAdd = lastNewline > MAX_DESC_LENGTH * 0.7 ? chunk.substring(0, lastNewline) : chunk;
+                
+                const embed = new EmbedBuilder()
+                    .setColor(0x3B82F6)
+                    .setFooter({ text: `Powered by Padh Lo AI • Part ${partNumber}` });
+                
+                if (partNumber === 1) {
+                    embed.setTitle(`📚 Explanation: ${topic.substring(0, 256)}`);
+                }
+                
+                embed.setDescription(textToAdd);
+                embeds.push(embed);
+                
+                remaining = remaining.substring(textToAdd.length).trim();
+                partNumber++;
+                
+                // Discord limit: max 10 embeds per message
+                if (partNumber > 10) {
+                    break;
+                }
+            }
         }
+
+        await interaction.editReply({ embeds });
     },
 };

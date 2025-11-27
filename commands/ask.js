@@ -13,36 +13,52 @@ module.exports = {
         await interaction.deferReply();
         const query = interaction.options.getString('query');
         
-        try {
-            const answer = await askQuestion(query, interaction.user.id);
-            
-            // Truncate question if too long
-            const displayQuery = query.length > 100 ? query.substring(0, 97) + '...' : query;
-            
+        const answer = await askQuestion(query, interaction.user.id);
+        
+        // Split long responses into multiple embeds
+        // Discord embed size limit is 6000 total, but we'll use 3500 per embed to be safe
+        const MAX_DESC_LENGTH = 3500;
+        const embeds = [];
+        
+        if (answer.length <= MAX_DESC_LENGTH) {
+            // Short response - single embed
             const embed = new EmbedBuilder()
-                .setAuthor({ 
-                    name: `${interaction.user.username} asked:`,
-                    iconURL: interaction.user.displayAvatarURL()
-                })
-                .setTitle(`❓ ${displayQuery}`)
-                .setDescription(
-                    `━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-                    `${answer}\n` +
-                    `━━━━━━━━━━━━━━━━━━━━━━━━━━━`
-                )
+                .setTitle(`❓ Question: ${query.substring(0, 256)}`)
+                .setDescription(answer)
                 .setColor(0x10B981)
-                .setFooter({ text: '🤖 Powered by Google Gemini AI • Gyan Guru' })
-                .setTimestamp();
-
-            await interaction.editReply({ embeds: [embed] });
-        } catch (error) {
-            const errorEmbed = new EmbedBuilder()
-                .setTitle('❌ Error')
-                .setDescription('Sorry, I encountered an error processing your question. Please try again or rephrase your question.')
-                .setColor(0xEF4444)
-                .setFooter({ text: 'If this persists, contact an administrator' });
+                .setFooter({ text: 'Padh Lo AI Assistant' });
+            embeds.push(embed);
+        } else {
+            // Long response - split into multiple embeds
+            let remaining = answer;
+            let partNumber = 1;
             
-            await interaction.editReply({ embeds: [errorEmbed] });
+            while (remaining.length > 0) {
+                const chunk = remaining.substring(0, MAX_DESC_LENGTH);
+                const lastNewline = chunk.lastIndexOf('\n');
+                const textToAdd = lastNewline > MAX_DESC_LENGTH * 0.7 ? chunk.substring(0, lastNewline) : chunk;
+                
+                const embed = new EmbedBuilder()
+                    .setColor(0x10B981)
+                    .setFooter({ text: `Padh Lo AI Assistant • Part ${partNumber}` });
+                
+                if (partNumber === 1) {
+                    embed.setTitle(`❓ Question: ${query.substring(0, 256)}`);
+                }
+                
+                embed.setDescription(textToAdd);
+                embeds.push(embed);
+                
+                remaining = remaining.substring(textToAdd.length).trim();
+                partNumber++;
+                
+                // Discord limit: max 10 embeds per message
+                if (partNumber > 10) {
+                    break;
+                }
+            }
         }
+
+        await interaction.editReply({ embeds });
     },
 };
